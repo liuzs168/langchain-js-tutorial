@@ -1,0 +1,31 @@
+{
+  "name": "langchain-js-tutorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devEngines": {
+    "packageManager": {
+      "name": "pnpm",
+      "version": "11.24.0",
+      "onFail": "download"
+    }
+  },
+  "packageManager": "pnpm@11.24.0",
+  "type": "module",
+  "dependencies": {
+    "@langchain/classic": "^1.0.52",
+    "@langchain/community": "^1.1.29",
+    "@langchain/core": "^1.2.17",
+    "@langchain/openai": "^1.6.2",
+    "cheerio": "^1.2.0",
+    "dotenv": "^18.0.6",
+    "langchain": "^1.5.16",
+    "zod": "^4.6.5"
+  }
+}
