@@ -5,6 +5,7 @@ import 'dotenv/config'; // pnpm add dotenv
 import { BufferMemory } from '@langchain/classic/memory';
 import { ConversationChain } from '@langchain/classic/chains';
 import { UpstashRedisChatMessageHistory } from '@langchain/community/stores/message/upstash_redis';
+import { RunnableSequence } from '@langchain/core/runnables';
 
 
 // 创建model
@@ -37,13 +38,26 @@ const memory = new BufferMemory({
 })
 
 
-//创建chain
-const chain = new ConversationChain({
-    llm: model,
-    prompt,
-    memory
-})
+//创建chain：方式1
+// const chain = new ConversationChain({
+//     llm: model,
+//     prompt,
+//     memory
+// })
 // const chain = prompt.pipe(model);
+
+const chain = RunnableSequence.from([
+    {
+        input: (initialInput) => initialInput.input,
+        memory: () => memory.loadMemoryVariables(),
+    },
+    {
+        input: (previousOutput) => previousOutput.input,
+        history: (previousOutput) => previousOutput.memory.history,
+    },
+    prompt,
+    model
+])
 
 //调用chain
 console.log(await memory.loadMemoryVariables())
